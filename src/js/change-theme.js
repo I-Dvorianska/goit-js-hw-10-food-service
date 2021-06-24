@@ -14,6 +14,7 @@ function changeBodyTheme(e) {
   if (e.target.checked) {
     removeClassFromBody(Theme.LIGHT);
     addClassForBody(Theme.DARK);
+    localStorage.setItem('theme', Theme.DARK);
   }
 
   if (!e.target.checked) {
@@ -21,6 +22,7 @@ function changeBodyTheme(e) {
       removeClassFromBody(Theme.DARK);
     }
     addClassForBody(Theme.LIGHT);
+    localStorage.setItem('theme', Theme.LIGHT);
   }
 }
 
@@ -31,3 +33,5 @@ function addClassForBody(theme) {
 function removeClassFromBody(theme) {
   indexBody.classList.remove(theme);
 }
+
+export { switchToggle, indexBody };
