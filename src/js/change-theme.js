@@ -8,25 +8,30 @@ const Theme = {
 
 switchToggle.addEventListener('change', changeBodyTheme);
 
+checkLocalStorage();
+checkBodyClass();
+
 function changeBodyTheme(e) {
-  e.preventDefault();
+  checkSwitchToggle();
+}
 
-  if (e.target.checked) {
+function checkSwitchToggle() {
+  if (switchToggle.checked) {
     removeClassFromBody(Theme.LIGHT);
-    addClassForBody(Theme.DARK);
-    localStorage.setItem('theme', Theme.DARK);
-  }
+    addClassToBody(Theme.DARK);
+    switchToggle.checked = true;
 
-  if (!e.target.checked) {
-    if (indexBody.classList.contains(Theme.DARK)) {
-      removeClassFromBody(Theme.DARK);
-    }
-    addClassForBody(Theme.LIGHT);
-    localStorage.setItem('theme', Theme.LIGHT);
+    localStorage.setItem('Theme', Theme.DARK);
+  }
+  if (!switchToggle.checked) {
+    removeClassFromBody(Theme.DARK);
+    addClassToBody(Theme.LIGHT);
+    localStorage.setItem('Theme', Theme.LIGHT);
+    switchToggle.checked = false;
   }
 }
 
-function addClassForBody(theme) {
+function addClassToBody(theme) {
   indexBody.classList.add(theme);
 }
 
@@ -34,4 +39,18 @@ function removeClassFromBody(theme) {
   indexBody.classList.remove(theme);
 }
 
-export { switchToggle, indexBody };
+function checkLocalStorage() {
+  const itemLocalStorage = localStorage.getItem('Theme');
+  if (itemLocalStorage) {
+    indexBody.classList.value = itemLocalStorage;
+  }
+}
+
+function checkBodyClass() {
+  const bodyClassValue = indexBody.classList.value;
+  if (bodyClassValue === Theme.DARK) {
+    switchToggle.checked = true;
+  } else {
+    switchToggle.checked = false;
+  }
+}
